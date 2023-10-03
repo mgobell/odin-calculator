@@ -85,7 +85,11 @@ function clearCalc(a) {
 }
 
 function changeSign() {
-
+    if (calcOperation === blankOperation) {
+        aNumber = parseFloat(aNumber * -1).toString();
+    } else {
+        bNumber = parseFloat(bNumber * -1).toString();
+    }
 }
 
 function useDecimal() {
