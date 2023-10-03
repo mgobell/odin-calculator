@@ -1,0 +1,32 @@
+body {
+    display: flex;
+    justify-content: center;
+}
+
+#calculator-container {
+    display: flex;
+    border: medium solid black;
+    height: 480px;
+    width: 360px;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 160px;
+}
+
+#calculator-display {
+    height: 80px;
+    border: medium solid grey;
+    ;
+}
+
+#button-container {
+    height: 400px;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.button-row {
+    display:flex;
+    justify-content: space-evenly;
+}
