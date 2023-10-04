@@ -2,11 +2,13 @@ const numberButtons = document.querySelectorAll('.number');
 const operatorButtons = document.querySelectorAll('.operation');
 const modifierButtons = document.querySelectorAll('.modify');  
 const evaluateButtons = document.querySelectorAll('.evaluate');
+const calcDisplay = document.querySelector('#calculator-display');
 numberButtons.forEach(button => button.addEventListener('click', numberButton));
 operatorButtons.forEach(button => button.addEventListener('click', operationButton));
 modifierButtons.forEach(button => button.addEventListener('click', modifyButton));
 evaluateButtons.forEach(button => button.addEventListener('click', evaluateButton));
 const decimalButton = document.querySelector('#button-dot');
+calcDisplay.textContent = '0';
 let input = '';
 let aNumber = NaN;
 let bNumber = NaN;
@@ -53,14 +55,17 @@ function evaluateButton(e) {
 
 function parseInput(i) {
     input += i;
+    calcDisplay.textContent = input;
 }
 function assignNumber() {
     if (input === '') return;
     if (calcOperation === blankOperation) {
        aNumber = parseFloat(input);
+       calcDisplay.textContent = aNumber.toString();
        input = '';
     } else {
         bNumber = parseFloat(input);
+        calcDisplay.textContent = bNumber.toString();
         input = '';
     }
 }
@@ -83,10 +88,12 @@ function operate(a, operator, b) {
     value = operator(a,b);
     clearCalc(value);
     console.log(value);
+    calcDisplay.textContent = value.toString();
     return value;
 }
 function clearCalc(a) {
     input = '';
+    calcDisplay.textContent = '0';
     aNumber = a;
     bNumber = NaN;
     calcOperation = blankOperation;
