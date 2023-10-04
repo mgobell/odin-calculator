@@ -8,10 +8,10 @@ operatorButtons.forEach(button => button.addEventListener('click', operationButt
 modifierButtons.forEach(button => button.addEventListener('click', modifyButton));
 evaluateButtons.forEach(button => button.addEventListener('click', evaluateButton));
 const decimalButton = document.querySelector('#button-dot');
-calcDisplay.textContent = '0';
 let input = '';
-let aNumber = NaN;
+let aNumber = 0;
 let bNumber = NaN;
+calcDisplay.textContent = aNumber.toString();
 let calcOperation = blankOperation;
 
 function numberButton(e) {
@@ -27,7 +27,7 @@ function numberButton(e) {
         case 'button-8': parseInput('8'); break;
         case 'button-9': parseInput('9'); break;
     }
-    console.log(`input: ${input}, a: ${aNumber}, operator: ${calcOperation()} b: ${bNumber}`);
+    console.log(`input: ${input}, a: ${aNumber}, operator: ${calcOperation} b: ${bNumber}`);
 }
 
 function operationButton(e) {
@@ -50,7 +50,7 @@ function modifyButton(e) {
 
 function evaluateButton(e) {
     assignNumber();
-    operate(aNumber, calcOperation, bNumber);
+    aNumber = operate(aNumber, calcOperation, bNumber);
 }
 
 function parseInput(i) {
@@ -62,21 +62,20 @@ function assignNumber() {
     if (calcOperation === blankOperation) {
        aNumber = parseFloat(input);
        calcDisplay.textContent = aNumber.toString();
-       input = '';
     } else {
         bNumber = parseFloat(input);
         calcDisplay.textContent = bNumber.toString();
-        input = '';
     }
+    input = '';
 }
 
 function assignOperator(op) {
     assignNumber();
-    if (bNumber !== NaN) {
-        aNumber = operate(aNumber, calcOperation, bNumber);
-    } 
-    calcOperation = op;
     decimalButton.disabled = false;
+    if (!isNaN(bNumber)) {
+        aNumber = operate(aNumber, calcOperation, bNumber);
+    }
+    calcOperation = op;
 }
 
 function operate(a, operator, b) {
@@ -86,18 +85,20 @@ function operate(a, operator, b) {
         return a;
     }
     value = operator(a,b);
+    if (value === "error") {
+        return 0;
+    }
     clearCalc(value);
     console.log(value);
-    calcDisplay.textContent = value.toString();
     return value;
 }
 function clearCalc(a) {
     input = '';
-    calcDisplay.textContent = '0';
     aNumber = a;
     bNumber = NaN;
     calcOperation = blankOperation;
-    document.querySelector('#button-dot').disabled = false;
+    decimalButton.disabled = false;
+    calcDisplay.textContent = aNumber.toString();        
 }
 
 function changeSign() {
@@ -121,6 +122,15 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
+    if (b === 0) {
+        calcDisplay.textContent = "ERROR - can't divide by zero!";
+        aNumber = 0;
+        bNumber = NaN;
+        input = '';
+        calcOperation = blankOperation;
+        decimalButton.disabled = false;
+        return "error";
+    }
     return a / b;
 }
 
