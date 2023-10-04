@@ -80,7 +80,7 @@ function assignOperator(op) {
 
 function operate(a, operator, b) {
     if (calcOperation === blankOperation) return a;
-    if (b === NaN) {
+    if (isNaN(b)) {
         clearCalc(a);
         return a;
     }

@@ -1,6 +1,34 @@
 body {
     display: flex;
     justify-content: center;
+    font-size: 56px; 
+}
+
+button {
+    flex: 1;
+    font-size: 48px;
+}
+
+button#button-clear,
+button#button-0 {
+    flex: 2;
+}
+
+.number {
+    background: yellow;
+}
+
+.operation {
+    background: red;
+    width: 90px;
+}
+
+.modify {
+    background: orange;
+}
+
+.evaluate {
+    background: green;
 }
 
 #calculator-container {
@@ -16,7 +44,7 @@ body {
 #calculator-display {
     height: 80px;
     border: medium solid grey;
-    ;
+    flex: 1;
 }
 
 #button-container {
@@ -27,6 +55,7 @@ body {
 }
 
 .button-row {
+    flex: 1;
     display:flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
