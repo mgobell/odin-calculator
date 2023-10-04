@@ -6,24 +6,26 @@ numberButtons.forEach(button => button.addEventListener('click', numberButton));
 operatorButtons.forEach(button => button.addEventListener('click', operationButton));
 modifierButtons.forEach(button => button.addEventListener('click', modifyButton));
 evaluateButtons.forEach(button => button.addEventListener('click', evaluateButton));
-let aNumber = '0';
-let bNumber = '';
+const decimalButton = document.querySelector('#button-dot');
+let input = '';
+let aNumber = NaN;
+let bNumber = NaN;
 let calcOperation = blankOperation;
 
 function numberButton(e) {
     switch(e.target.id) {
-        case 'button-0': assignNumber('0'); break;
-        case 'button-1': assignNumber('1'); break;
-        case 'button-2': assignNumber('2'); break;
-        case 'button-3': assignNumber('3'); break;
-        case 'button-4': assignNumber('4'); break;
-        case 'button-5': assignNumber('5'); break;
-        case 'button-6': assignNumber('6'); break;
-        case 'button-7': assignNumber('7'); break;
-        case 'button-8': assignNumber('8'); break;
-        case 'button-9': assignNumber('9'); break;
+        case 'button-0': parseInput('0'); break;
+        case 'button-1': parseInput('1'); break;
+        case 'button-2': parseInput('2'); break;
+        case 'button-3': parseInput('3'); break;
+        case 'button-4': parseInput('4'); break;
+        case 'button-5': parseInput('5'); break;
+        case 'button-6': parseInput('6'); break;
+        case 'button-7': parseInput('7'); break;
+        case 'button-8': parseInput('8'); break;
+        case 'button-9': parseInput('9'); break;
     }
-    console.log(`a: ${aNumber} b: ${bNumber}`);
+    console.log(`input: ${input}, a: ${aNumber}, operator: ${calcOperation()} b: ${bNumber}`);
 }
 
 function operationButton(e) {
@@ -45,59 +47,59 @@ function modifyButton(e) {
 }
 
 function evaluateButton(e) {
+    assignNumber();
     operate(aNumber, calcOperation, bNumber);
 }
 
-
-function assignNumber(number) {
+function parseInput(i) {
+    input += i;
+}
+function assignNumber() {
+    if (input === '') return;
     if (calcOperation === blankOperation) {
-       aNumber += number; 
-       aNumber = parseFloat(aNumber).toString();
+       aNumber = parseFloat(input);
+       input = '';
     } else {
-        bNumber += number;
-        bNumber = parseFloat(bNumber).toString();
+        bNumber = parseFloat(input);
+        input = '';
     }
 }
 
 function assignOperator(op) {
-    if (bNumber !== '') {
-        aNumber = operate(parseFloat(aNumber), calcOperation, parseFloat(bNumber));
+    assignNumber();
+    if (bNumber !== NaN) {
+        aNumber = operate(aNumber, calcOperation, bNumber);
     } 
     calcOperation = op;
+    decimalButton.disabled = false;
 }
 
 function operate(a, operator, b) {
     if (calcOperation === blankOperation) return a;
-    if (b === '') {
+    if (b === NaN) {
         clearCalc(a);
         return a;
     }
-    value = operator(parseFloat(a),parseFloat(b));
-    value.toString();
+    value = operator(a,b);
     clearCalc(value);
     console.log(value);
     return value;
 }
 function clearCalc(a) {
+    input = '';
     aNumber = a;
-    bNumber = '';
+    bNumber = NaN;
     calcOperation = blankOperation;
+    document.querySelector('#button-dot').disabled = false;
 }
 
 function changeSign() {
-    if (calcOperation === blankOperation) {
-        aNumber = parseFloat(aNumber * -1).toString();
-    } else {
-        bNumber = parseFloat(bNumber * -1).toString();
-    }
+    input = parseFloat(aNumber * -1).toString();
 }
 
 function useDecimal() {
-    if (calcOperation === blankOperation) {
-        aNumber += '.';
-    } else {
-        bNumber += '.';
-    }
+    input += '.';
+    decimalButton.disabled = true;
 }
 function add(a, b) {
     return a + b;
