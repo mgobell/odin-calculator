@@ -1,7 +1,7 @@
 body {
     display: flex;
     justify-content: center;
-    font-size: 56px; 
+    font-size: 40px; 
 }
 
 button {
@@ -42,6 +42,7 @@ button#button-0 {
 }
 
 #calculator-display {
+    text-align: end;
     height: 80px;
     border: medium solid grey;
     flex: 1;

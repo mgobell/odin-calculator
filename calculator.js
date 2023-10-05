@@ -3,6 +3,7 @@ const operatorButtons = document.querySelectorAll('.operation');
 const modifierButtons = document.querySelectorAll('.modify');  
 const evaluateButtons = document.querySelectorAll('.evaluate');
 const calcDisplay = document.querySelector('#calculator-display');
+window.addEventListener('keydown', keyPress);
 numberButtons.forEach(button => button.addEventListener('click', numberButton));
 operatorButtons.forEach(button => button.addEventListener('click', operationButton));
 modifierButtons.forEach(button => button.addEventListener('click', modifyButton));
@@ -14,7 +15,22 @@ let bNumber = NaN;
 calcDisplay.textContent = aNumber.toString();
 let calcOperation = blankOperation;
 
+function keyPress(e) {
+    console.log(e.key);
+    if (!isNaN(parseInt(e.key))) parseInput(e.key);
+    else {
+        switch(e.key) {
+            case '/': assignOperator(divide); break;
+            case '*': assignOperator(multiply); break;
+            case '+': assignOperator(add); break;
+            case '-': assignOperator(subtract); break;
+            case '.': useDecimal(); break;
+            case 'Enter': evaluateButton(e); break;
+        }
+    }
+}
 function numberButton(e) {
+    console.log(e.target);
     switch(e.target.id) {
         case 'button-0': parseInput('0'); break;
         case 'button-1': parseInput('1'); break;
