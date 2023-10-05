@@ -16,7 +16,6 @@ calcDisplay.textContent = aNumber.toString();
 let calcOperation = blankOperation;
 
 function keyPress(e) {
-    console.log(e.key);
     if (!isNaN(parseInt(e.key))) parseInput(e.key);
     else {
         switch(e.key) {
@@ -30,7 +29,6 @@ function keyPress(e) {
     }
 }
 function numberButton(e) {
-    console.log(e.target);
     switch(e.target.id) {
         case 'button-0': parseInput('0'); break;
         case 'button-1': parseInput('1'); break;
@@ -43,7 +41,6 @@ function numberButton(e) {
         case 'button-8': parseInput('8'); break;
         case 'button-9': parseInput('9'); break;
     }
-    console.log(`input: ${input}, a: ${aNumber}, operator: ${calcOperation} b: ${bNumber}`);
 }
 
 function operationButton(e) {
@@ -53,7 +50,6 @@ function operationButton(e) {
         case 'button-minus': assignOperator(subtract); break;
         case 'button-plus': assignOperator(add); break;
     }
-    console.log(calcOperation);
 }
 
 function modifyButton(e) {
